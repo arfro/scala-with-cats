@@ -1,0 +1,7 @@
+[0m[[0m[31merror[0m] [0m[0m/home/aerfromenes/Workspace/github/scala-with-cats/src/test/scala/chapter1/PrintableTest.scala:3:29: not found: type UnitTest[0m
+[0m[[0m[31merror[0m] [0m[0mclass PrintableTest extends UnitTest {[0m
+[0m[[0m[31merror[0m] [0m[0m                            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/aerfromenes/Workspace/github/scala-with-cats/src/test/scala/chapter1/PrintableTest.scala:5:13: value should is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m  "A Stack" should "pop values in last-in-first-out order" in {[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m

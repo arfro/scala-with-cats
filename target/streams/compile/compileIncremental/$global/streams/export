@@ -1,0 +1,1 @@
+scalac -bootclasspath /home/aerfromenes/.sbt/boot/scala-2.12.7/lib/scala-library.jar -classpath /home/aerfromenes/Workspace/github/scala-with-cats/target/scala-2.12/classes /home/aerfromenes/Workspace/github/scala-with-cats/src/main/scala/chapter1/Printable.scala
