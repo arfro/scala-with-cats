@@ -12,4 +12,10 @@ class PrintableCatsTest extends UnitTest {
     cat.show shouldBe s"Cat is ${cat.age} years old"
   }
 
+  it should "interpolate with show instead of toString" in {
+    import PrintableCats.showCat
+    import cats.implicits._
+    show"$cat" shouldBe s"Cat is ${cat.age} years old"
+  }
+
 }
