@@ -5,9 +5,16 @@ import cats.syntax.eq._
 
 class CatEqInstancesTest extends UnitTest {
 
-  "EqCats" should "allow to compare cat instances with =!=" in {
+
+  val cat1 = Cat("cat", 2, "")
+  val cat2 = Cat("cat", 22, "")
+
+  "EqCats" should "allow to compare cat instances" in {
     import CatEqInstances._
-    Cat("cat", 2, "") =!= Cat("ada", 3, "") shouldBe true
+    eqCat.eqv(cat1, cat2) shouldBe false
+    cat1 =!= cat2 shouldBe true
   }
+
+  // I'm not sure how to test syntax of triple equals from cats library, '===' by default refers to triple equals from scalaTest library
 
 }
