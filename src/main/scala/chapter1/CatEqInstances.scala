@@ -15,5 +15,4 @@ object CatEqInstances {
     (c1: Cat, c2: Cat) => (c1.name === c2.name) && (c1.age === c2.age)
   }
 
-
 }
