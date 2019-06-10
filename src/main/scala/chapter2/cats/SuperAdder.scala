@@ -14,7 +14,8 @@ object SuperAdder {
   // add for Orders!
   case class Order(totalCost: Double, quantity: Double)
 
-  implicit val ordersMonoidCost: Monoid[Order] = new Monoid[Order] {
+  // combining two Orders can be done using a Monoid. There is a monoid per operation, keep in mind subtraction could not be a monoid, because it's not associative!
+  implicit val ordersAddingMonoid: Monoid[Order] = new Monoid[Order] {
     override def combine(x: Order, y: Order): Order = Order(x.totalCost + y.totalCost, x.quantity + y.quantity)
     override def empty: Order = Order(0.0, 0.0)
   }

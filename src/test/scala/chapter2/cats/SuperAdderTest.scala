@@ -21,7 +21,7 @@ class SuperAdderTest extends UnitTest {
   }
 
   "SupperAdder - adding orders" should "add two orders" in {
-    import SuperAdder.ordersMonoidCost
+    import SuperAdder.ordersAddingMonoid
     val order1 = Order(2, 4)
     val order2 = Order(1, 3)
     SuperAdder.addMonoid(List(order1, order2)) shouldBe Order(3, 7)
