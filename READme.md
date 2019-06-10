@@ -6,6 +6,10 @@ Operation that:
 * combines two elements (`1 + 3`)
 * DOESN'T have an _empty_ element
 
+For example:
+* addition on positive numbers (0 is not a positive number, so this operation does not have an _empty_ element)
+
+
 ## Monoids
 It's a semigroup too. It's has to do with an <b>operation</b>, NOT a data type. A monoid is a property of an operation on types, a monoid is an operation that:
 * is associative (`1 + 3` is the same as `3 + 1`)
