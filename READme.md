@@ -1,7 +1,13 @@
 These are my non-code notes from the book. This is all in my words.
 
+## Semigroup
+Operation that:
+* is associative (`1 + 3` is the same as `3 + 1`)
+* combines two elements (`1 + 3`)
+* DOESN'T have an _empty_ element
+
 ## Monoids
-It's an <b>operation</b>, NOT a data type. A monoid is a property of an operation on types, a monoid is an operation that:
+It's a semigroup too. It's has to do with an <b>operation</b>, NOT a data type. A monoid is a property of an operation on types, a monoid is an operation that:
 * is associative (`1 + 3` is the same as `3 + 1`)
 * has an _empty_ element (`1 + 0` or `0 + 1` is the same as `1`)
 * combines two elements (`1 + 2`)
