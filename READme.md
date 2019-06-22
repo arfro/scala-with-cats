@@ -42,19 +42,17 @@ e.g. `List(1, 2, 3).map(function1).map(function2).map(function3)`
 
 `map` should not be thought of as in "iterate through this sequence" but "apply this function to each element". `map` never changes the context of type it's called on so it can be chained as shown above. 
 
-### Functors in real life
-
-#### Futures 
-A functor that allows sequencing asynchronous operations, it works by applying those operations only once predecessors are complete. Once the Future is complete, then only `map` executes. Futures always start immediately, it doesn't let the program dictate when to start.
-
-#### Functions (?!)
-Think about it - function composition is sequencing. And functors are all about sequencing!
-
+Functor in cats also provides `lift` method which converts a function `A => B` to work in on a functor so to `F[A] => F[B]`. 
  
 ## Higher kinds and Type constructors
 Kinds are like types for types. They describe the number of "holes" to fill in a type. E.g. List has one "hole" - it can be `List[String]` or `List[Int]` or anything else. 
 
-<b>`List` is a type constructor</b>
+<b>`List` is a type constructor</b><br>
 <b>`List[A]` is a type</b>
 
+Think of an analogy to functions and values. Function is like a type contructor and values are like types. Values and types are "concrete", functions and type constructors need _something_ to work (function (usually) needs an argument and type constructor needs a type).
+
+In Scala we <b>declare</b> type constructors using underscore like `def myMethod[F[_]]`. Once they're declared we refer to them as simple identifiers like `val functor = Functor.apply[F]`
+
+When working with higher kinded types we need to import scala.language.higherKinds to avoid warnings from the compiler. 
 
