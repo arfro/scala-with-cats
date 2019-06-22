@@ -21,4 +21,13 @@ class TreeFunctorExerciseTest extends UnitTest {
     mapOperation shouldBe expectedTree
   }
 
+  it should "map over Tree with branches and leaves using imported cats syntax for functor map" in {
+    import cats.syntax.functor._
+    import TreeFunctorExercise._
+    val tree = Tree.branch(Tree.branch(Tree.leaf(1), Tree.leaf(2)), Tree.leaf(3))
+    val expectedTree = Tree.branch(Tree.branch(Tree.leaf(5), Tree.leaf(6)), Tree.leaf(7))
+    val mapOperation = tree.map(_ + 4) // nice syntax thanks to cats.syntax.functor._!
+    mapOperation shouldBe expectedTree
+  }
+
 }

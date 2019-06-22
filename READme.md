@@ -43,6 +43,9 @@ e.g. `List(1, 2, 3).map(function1).map(function2).map(function3)`
 `map` should not be thought of as in "iterate through this sequence" but "apply this function to each element". `map` never changes the context of type it's called on so it can be chained as shown above. 
 
 Functor in cats also provides `lift` method which converts a function `A => B` to work in on a functor so to `F[A] => F[B]`. 
+
+Functor wraps a type (let's say like from the code examples - `Tree[A]`). We will need an implicit Functor instance for `Tree[A]` that implements map for `Tree` - this will need to be in a scope so we can call `Functor[Tree].map(tree)(function)` - otherwise compiler doesn't know how to `map` over `Tree`.
+
  
 ## Higher kinds and Type constructors
 Kinds are like types for types. They describe the number of "holes" to fill in a type. E.g. List has one "hole" - it can be `List[String]` or `List[Int]` or anything else. 

@@ -23,7 +23,7 @@ object TreeFunctorExercise {
   implicit val functorTreeImplicit: Functor[Tree] = new Functor[Tree] {
     def map[A, B](tree: Tree[A])(function: A => B): Tree[B] =
       tree match {
-        // we need the same structure so pattern match on Branch needs to give us Brach
+        // we need the same structure so pattern match on Branch needs to give us Branch
         case Branch(left, right) => Branch(map(left)(function), map(right)(function))
         // and pattern match on Leaf needs to give us Leaf
         case Leaf(value) => Leaf(function(value))
