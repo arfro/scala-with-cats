@@ -58,10 +58,9 @@ In the simplest, it's a mechanism for _sequencing computations_.
 Formally monads have to abide to laws (checkout chapter4/MonadWorksheet.sc for code:
 * have `pure` function - create a monadic context from a plain value, e.g. `Future[Int]` from `Int`
 * have `flatMap` funtion - sequence computations: extract from context, compute, generate next context.
-* <b>Left identity</b> - 
-* Left identity law - calling pure on `a` and flatmapping with `function` is the same as calling `function(a)`
-* Right identity law - passing `pure` to flatMap is the same as doing nothing
-* Identity law - flatmapping with f and then g is the same as flatmapping with g and then f
+* <b>Left identity</b> - calling pure on `a` and flatmapping with `function` is the same as calling `function(a)`
+* <b>Right identity law</b> - passing `pure` to flatMap is the same as doing nothing
+* <b>Identity law</b> - flatmapping with f and then g is the same as flatmapping with g and then f
 
  
 ## Higher kinds and Type constructors
