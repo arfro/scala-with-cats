@@ -1,4 +1,4 @@
-These are my non-code notes from the book. This is all in my words.
+These are my non-code notes from _Scala with Cats_ by Noel Welsh and Dave Gurnell. A mix of my own words and cool quotes. Get the book, it's awesome!
 
 ## Semigroup
 It has to do with an <b>operation</b>, NOT a data type. Semigroup is an operation that:
@@ -46,6 +46,23 @@ Functor in cats also provides `lift` method which converts a function `A => B` t
 
 Functor wraps a type (let's say like from the code examples - `Tree[A]`). We will need an implicit Functor instance for `Tree[A]` that implements map for `Tree` - this will need to be in a scope so we can call `Functor[Tree].map(tree)(function)` - otherwise compiler doesn't know how to `map` over `Tree`.
 
+
+## Monad
+Informally, anything with a constructor and a `flatMap` method. e.g. `Future[Int]` - `Future` is a type constructor and `Future[Int]` is a type. For comprehension is a special syntax that supports composing monads. 
+
+In the simplest, it's a mechanism for _sequencing computations_.
+
+`List` - thinking in a monadic way: `List` is a set of intermediate results! Flatmapping over it gives us combinations and permutations
+`Future` - monad that sequences asynchronous computations. Flatmapping it takes care of the underlaying stuff like thread pools or schedulers.
+
+Formally monads have to abide to laws (checkout chapter4/MonadWorksheet.sc for code:
+* have `pure` function - create a monadic context from a plain value, e.g. `Future[Int]` from `Int`
+* have `flatMap` funtion - sequence computations: extract from context, compute, generate next context.
+* <b>Left identity</b> - 
+* Left identity law - calling pure on `a` and flatmapping with `function` is the same as calling `function(a)`
+* Right identity law - passing `pure` to flatMap is the same as doing nothing
+* Identity law - flatmapping with f and then g is the same as flatmapping with g and then f
+
  
 ## Higher kinds and Type constructors
 Kinds are like types for types. They describe the number of "holes" to fill in a type. E.g. List has one "hole" - it can be `List[String]` or `List[Int]` or anything else. 
@@ -58,4 +75,3 @@ Think of an analogy to functions and values. Function is like a type contructor 
 In Scala we <b>declare</b> type constructors using underscore like `def myMethod[F[_]]`. Once they're declared we refer to them as simple identifiers like `val functor = Functor.apply[F]`
 
 When working with higher kinded types we need to import scala.language.higherKinds to avoid warnings from the compiler. 
-
