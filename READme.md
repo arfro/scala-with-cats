@@ -65,6 +65,15 @@ Formally monads have to abide to laws (checkout chapter4/MonadWorksheet.sc for c
 ### Identity monad
 Monad that allows us to call monadic method using plain values, so if `f(a: M[Int])` takes a monad for type Int if we change the type to `Id[Int]` we can just call `f(2)` with plain Int. This monad could be useful when in production we're running code asynchrounously using `Future` but for tests we want to run it synchronously. We then use `Id`. As it's identity calling this monad with pure, map or flatmap with always return the value itself.
 
+### Either monad
+`Right` represents success and supports map and flatMap directly. It's much easier with for comprehensions. 
+
+Rules/tips: 
+* Better to use smart constructors to avoid type problems: `3.asRight[Int]` vs `Right(3)`
+* you can transform Eithers a lot. Just to name a few methods: toOption, fromTry, catchOnly.
+
+
+(All above applies to Scala 2.12, before 2.12 it didn't have map and flatMap, in 2.12 it was redesigned but you could use cats.syntax.either._ to make Either right biased prior to 2.12)
  
  
 ## Higher kinds and Type constructors
