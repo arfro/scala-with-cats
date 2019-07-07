@@ -92,7 +92,7 @@ object EitherMonad {
   val swap2 = 3.asRight[String].swap
 
 // 9. toOption, toList, toTry etc...
-  
+
   // Some(12)
   val toOption = 12.asRight[String].toOption
   // None
