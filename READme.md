@@ -78,7 +78,12 @@ Rules/tips:
 Just like `Either` only that `Left` is `Throwable`
 
 ### Eval monad
-A monad that allows to abstract over different _models of evaluation_ (lazy vs eager). 
+A monad that allows to abstract over different _models of evaluation_ (lazy vs eager):
+* Eval.now() - similar to val, eager and memoized
+* Eval.always() - similar to def, lazy computation, not memoized
+* Eval.later() - similar to lazy val, lazdy and memoized
+
+Trampolining - a technique where you can nest calls to map and flatMap without consuming stack frames - that means it is "stack safe" and won't blow up like recursion would. There are still limits though, it creates a chain of functions on the heap. Eval.defer protects the recursive call basically.
 
 ## Error handling
 #### Either
