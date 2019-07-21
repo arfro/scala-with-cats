@@ -88,7 +88,7 @@ Trampolining - a technique where you can nest calls to map and flatMap without c
 ### Writer monad
 Lets you carry the log with computation. Used to record errors or messages about computation and extract the log at the end of computation. It's used in multithreaded environment to have log messages that are not mixed up. `Writer[W, A]` <- log of type `W` and result type `A`. Best choice for a log type is `Vector`, or anything else that's easily concatenated.
 
-`flatMap` over a Writer monad allows to combine them, so most common usage would be as follows:
+`flatMap` over a Writer monad allows to combine them, so usage would be as follows:
 
 ```java
 import cats.data.Writer 
