@@ -85,6 +85,24 @@ A monad that allows to abstract over different _models of evaluation_ (lazy vs e
 
 Trampolining - a technique where you can nest calls to map and flatMap without consuming stack frames - that means it is "stack safe" and won't blow up like recursion would. There are still limits though, it creates a chain of functions on the heap. Eval.defer protects the recursive call basically.
 
+### Writer monad
+Lets you carry the log with computation. Used to record errors or messages about computation and extract the log at the end of computation. It's used in multithreaded environment to have log messages that are not mixed up. `Writer[W, A]` <- log of type `W` and result type `A`. Best choice for a log type is `Vector`, or anything else that's easily concatenated.
+
+`flatMap` over a Writer monad allows to combine them, so most common usage would be as follows:
+
+```java
+import cats.data.Writer 
+import cats.instances.vector._
+
+val x = Writer(Vector("some intermediary computation"), 3)
+val y = Writer(Vector("another intermediary computation"), 4)
+
+val z = for {
+  a <- x
+  b <- y
+} yield a + b
+```
+
 ## Error handling
 #### Either
 It's good practice to use algebraic data types with Either - if we use a sum ADT for errors we expect we can nicely pattern match. If we also create a type alias it becomes very intuitive: `type LoginResult = Either[LoginError, User]` 
