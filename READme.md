@@ -101,7 +101,16 @@ val z = for {
   a <- x
   b <- y
 } yield a + b
+// WriterT(Vector(some intermediary computation, another intermediary computation),7)
+
+println(z.value)
+// 7
+
+println(z.written)
+// Vector(some intermediary computation, another intermediary computation)
 ```
+
+(See code for alternative syntax!)
 
 ## Error handling
 #### Either
