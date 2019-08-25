@@ -112,6 +112,16 @@ println(z.written)
 
 (See code for alternative syntax!)
 
+### Reader monad
+Reader monad allows to sequence operations that depend on some input. Reader wraps up functions of one argument and allows for composing them.
+
+One common use is <b>dependency injection</b>. Using a reader monad we can chain a number of computations and produce one large operation that takes one configuration as an argument. To do this we create a set of Reader monads, combine them with map and flatMap and then run them to add a config at the end.
+
+We create a Reader instance `Reader[A, B]` from a function `A => B` using `Reader.apply`.
+
+The true power of Reader monad comes from its `map` and `flatmap` functions though. This is the heart of the above mentioned chaining computations power. Reader monad allows you to e.g. first describe want you want to do with your data and the pass the dependency, so: getUserId, checkPassword and THEN only run passing database to a "run" method.
+
+
 ## Error handling
 #### Either
 It's good practice to use algebraic data types with Either - if we use a sum ADT for errors we expect we can nicely pattern match. If we also create a type alias it becomes very intuitive: `type LoginResult = Either[LoginError, User]` 
