@@ -81,7 +81,7 @@ Just like `Either` only that `Left` is `Throwable`
 A monad that allows to abstract over different _models of evaluation_ (lazy vs eager):
 * Eval.now() - similar to val, eager and memoized
 * Eval.always() - similar to def, lazy computation, not memoized
-* Eval.later() - similar to lazy val, lazdy and memoized
+* Eval.later() - similar to lazy val, lazy and memoized
 
 Trampolining - a technique where you can nest calls to map and flatMap without consuming stack frames - that means it is "stack safe" and won't blow up like recursion would. There are still limits though, it creates a chain of functions on the heap. Eval.defer protects the recursive call basically.
 
@@ -120,6 +120,34 @@ One common use is <b>dependency injection</b>. Using a reader monad we can chain
 We create a Reader instance `Reader[A, B]` from a function `A => B` using `Reader.apply`.
 
 The true power of Reader monad comes from its `map` and `flatmap` functions though. This is the heart of the above mentioned chaining computations power. Reader monad allows you to e.g. first describe want you want to do with your data and the pass the dependency, so: getUserId, checkPassword and THEN only run passing database to a "run" method.
+
+Real life usage:
+* programs that can be represented by a single function (each step is a reader monad)
+* we need to defer injection of a known parameter(s)
+* we want to be able to test little chunks of our program in isolation (each step is a reader, so can be represented as a pure function)
+
+In general, Reader Monad is a good idea for dependency injection for <b>simple cases only</b>. If we have a lot of dependencies or it isn't easy to represent a program as pure functions other DI techniques may be better.
+
+## State monad
+
+Allows to pass additional state around as a part of computation. State instances represent atomic operations. State monad is used to model <b>mutable state</b> in a purely functional way. State monad doesn't actually mutate anything!
+
+`State[S, A]` represents a function `S => (S, A)`. `S` is a type of the state and `A` is a type of a result of computation. We run a state monad using one of the three: `run`, `runA`, `runS` - they all return a different combination of state and result. 
+* They all return an instance of `Eval` to keep the stack safe
+* We use `.value` to extract the actual result
+* `runS` returns state
+* `runA` returns value
+* `run` returns value
+
+Again, the power of this monad comes from combining instances. 
+
+The rule for using State monad is: represent each step of computation as a State monad and then combine them.
+
+Again, it's good practice to alias State type.
+
+
+
+Note: State monad is VERY similar to the Writer monad with the difference that in the State monad you have access to your previously computed data at all times, and in the Writer only at the very end. So, in a way Writer is for write only (can't read state) and State is for both write and read (can access the state at all times)
 
 
 ## Error handling

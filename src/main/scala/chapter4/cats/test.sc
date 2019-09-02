@@ -1,4 +1,3 @@
-val map: Map[Int, String] = Map((1, "da"), (3, "dad"))
+import chapter4.cats.StateMonad
 
-
-map.find(_._2 == "dad")
+StateMonad.firstMonad.run(10).value
