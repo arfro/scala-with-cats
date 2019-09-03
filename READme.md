@@ -128,6 +128,8 @@ Real life usage:
 
 In general, Reader Monad is a good idea for dependency injection for <b>simple cases only</b>. If we have a lot of dependencies or it isn't easy to represent a program as pure functions other DI techniques may be better.
 
+Reader monad is a specialization of a more general concept called Kleisli arrow.
+
 ## State monad
 
 Allows to pass additional state around as a part of computation. State instances represent atomic operations. State monad is used to model <b>mutable state</b> in a purely functional way. State monad doesn't actually mutate anything!
@@ -148,6 +150,20 @@ Again, it's good practice to alias State type.
 
 
 Note: State monad is VERY similar to the Writer monad with the difference that in the State monad you have access to your previously computed data at all times, and in the Writer only at the very end. So, in a way Writer is for write only (can't read state) and State is for both write and read (can access the state at all times)
+
+
+## Monad transformers
+All flowers and unicorns but... monads don't compose. To partially solve it Cats library provides monads transformers. Long story short they help working with stacked monads like `Future[List[Int]]`. A monad transformer is any monad name with added T like: `EitherT`, `OptionT`. Monad transformers are actually data types that allow us to wrap stacks of monads to produce new monads. 
+
+Monad transformers:
+* cats.data.OptionT for Option
+* cats.data.EitherT for Either
+* cats.data.ReaderT for Reader (ReaderT is exactly the same as Kleisli arrow!!!)
+* cats.data.WriterT for Writer
+* cats.data.StateT for State
+* cats.data.IdT for Id
+
+All monad transformers follow the same convention. The transformer itself represents the INNER monad in the stack while the first type parameter represents the outer monad.
 
 
 ## Error handling
