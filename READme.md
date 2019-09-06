@@ -153,7 +153,23 @@ Note: State monad is VERY similar to the Writer monad with the difference that i
 
 
 ## Monad transformers
-All flowers and unicorns but... monads don't compose. To partially solve it Cats library provides monads transformers. Long story short they help working with stacked monads like `Future[List[Int]]`. A monad transformer is any monad name with added T like: `EitherT`, `OptionT`. Monad transformers are actually data types that allow us to wrap stacks of monads to produce new monads. 
+All flowers and unicorns but... monads don't compose. To partially solve it Cats library provides monads transformers. Long story short they help working with stacked monads like `Future[List[Int]]`. A monad transformer is any monad name with added T like: `EitherT`, `OptionT`. Monad transformers are actually data types that allow us to wrap stacks of monads to produce new monads. Monad Transformers help us in dealing with nested monads, by providing a flatten representation of two nested monads that is a monad itself.
+
+All monad transformers follow the same convention. The transformer itself represents the INNER monad in the stack while the first type parameter represents the outer monad. `OptionT[F[_], A]` is a light wrapper on an `F[Option[A]]`. In real life monad transformers can be useful e.g. when a database result is of type `val result = Future[Option[UserId]]`. We would have to map over it and the code would be very verbose. We can wrap it like `OptionT(result)`. 
+
+```java
+import cats.data.OptionT
+import cats.implicits._
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+
+val abc: Future[Option[Int]] = Future.successful(Some(3))
+
+val f: OptionT[Future, Int] = OptionT(abc).map(c => c + 4) // we can operate directly on the Int now!
+
+val d = f.value
+
+```
 
 Monad transformers:
 * cats.data.OptionT for Option
@@ -162,8 +178,6 @@ Monad transformers:
 * cats.data.WriterT for Writer
 * cats.data.StateT for State
 * cats.data.IdT for Id
-
-All monad transformers follow the same convention. The transformer itself represents the INNER monad in the stack while the first type parameter represents the outer monad.
 
 
 ## Error handling
