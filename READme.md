@@ -179,12 +179,54 @@ Monad transformers:
 * cats.data.StateT for State
 * cats.data.IdT for Id
 
+<b>KLEISLI = READER MONAD!!!</b>
+
+## Applicative and semigroups
+Sometimes we don't want to short circuit like in a monadic composition. E.g. in for comprehension the first 
+error "cancels" the rest of the computation. Sometimes we want to return all of the errors. This is where
+semigroup abd applicatives come into play
+
+#### Semigroup
+Used for composing pais of contexts - allows users to sequence functions with multiple arguments.<br>
+If we have two objects of type `F[A]` and `F[B]` then a `Semigroup[F]` allows to combine them to produce `F[(A, B)]`
+e.g. `(Some(1), Some(234.03), Some("abc")).tupled == Some((1, 234.03, "abc"))` 
+
+#### Applicative
+extends Semigroup and Functor. Provides a way od applying functions to parameters within a context.
+Applicative is the source of 'pure' method.
+ 
 
 ## Error handling
 #### Either
 It's good practice to use algebraic data types with Either - if we use a sum ADT for errors we expect we can nicely pattern match. If we also create a type alias it becomes very intuitive: `type LoginResult = Either[LoginError, User]` 
 
+#### Validated
+In contrary to `Either` and its fail fast there is `Validated`. `Validated` complements `Either` nicely allowing for accumulating errors.
 
+
+`Validated.Valid` roughly translates to `Right`<br>
+`Validated.Invalid` roughly translates to `Left`<br><br>
+
+It is possible to create `Validated` instances from `Try`, `Option` or `Either`:
+```java
+Validated.catchOnly[NumberFormatException]("foo".toInt)
+// Invalid(java.lang.NumberFormatException: For input ...
+Validated.catchNonFatal(sys.error("oops"))
+// Invalid(oops)
+Validated.fromTry(scala.util.Try("foo".toInt))
+// Invalid(java.lang.NumberFormatException: For input ...
+Validated.fromEither[String, Int](Left("oops"))
+// Invalid(oops)
+Validated.fromOption(None, "oops")
+// Invalid(oops)
+```
+
+It is possible to combine instances od `Validated`. `Validated` accumulates errors using `Semigroup`
+ so we need that in scope. We need to provide e.g. a `Vector` to accumulate the errors.
+ 
+We CANNOT flatmap because `Validated` is NOT a monad! We can however use `andThen`. If we need to have flatmap available it's very easy to convert `Validated` to e.g. `Either`
+
+We can use `Validated` to introduce "fail slow" and collect failures error handling. 
  
  
 ## Algrebraic data types
